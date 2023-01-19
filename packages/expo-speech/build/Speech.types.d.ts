@@ -89,9 +89,12 @@ export type Voice = {
      * Voice language.
      */
     language: string;
+    /**
+     * True if the default Voice.
+     */
+    isDefault: boolean;
 };
 export type WebVoice = Voice & {
-    isDefault: boolean;
     localService: boolean;
     name: string;
     voiceURI: string;
