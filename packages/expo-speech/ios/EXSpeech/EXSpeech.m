@@ -139,7 +139,11 @@ EX_EXPORT_METHOD_AS(getVoices,
                     rejecter:(EXPromiseRejectBlock)reject) {
   NSArray<AVSpeechSynthesisVoice *> *availableVoices = [AVSpeechSynthesisVoice speechVoices];
   NSMutableArray<NSDictionary *> *availableVoicesResult = [NSMutableArray array];
+  NSString *defaultLanguage = [AVSpeechSynthesisVoice currentLanguageCode];
+  NSString *defaultVoiceIdentifier = [[AVSpeechSynthesisVoice voiceWithLanguage:defaultLanguage] identifier];
+
   for (AVSpeechSynthesisVoice* voice in availableVoices) {
+    NSNumber *isDefault = @([voice.identifier isEqualToString:defaultVoiceIdentifier]);
     NSString *quality = @"Default";
     if (voice.quality == AVSpeechSynthesisVoiceQualityEnhanced) {
       quality = @"Enhanced";
@@ -148,7 +152,8 @@ EX_EXPORT_METHOD_AS(getVoices,
                                 @"identifier" : voice.identifier,
                                 @"name"       : voice.name,
                                 @"quality"    : quality,
-                                @"language"   : voice.language
+                                @"language"   : voice.language,
+                                @"isDefault"   : isDefault
                                 };
     [availableVoicesResult addObject:voiceInfo];
   }

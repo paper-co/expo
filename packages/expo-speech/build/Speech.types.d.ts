@@ -89,9 +89,16 @@ export type Voice = {
      * Voice language.
      */
     language: string;
+    /**
+     * True if the default voice on the device. See description below.
+     *
+     * - Android: Uses the TextToSpeech.getDefaultVoice() method to retrieve the default voice for the default Text-to-speech language. [Reference](https://developer.android.com/reference/kotlin/android/speech/tts/TextToSpeech#getdefaultvoice)
+     * - iOS: Returns the default AVSpeechSynthesisVoice when instantiated with the user's currentLanguageCode. [Reference](https://developer.apple.com/documentation/avfaudio/avspeechsynthesisvoice/1619707-currentlanguagecode?changes=_7&language=objc)
+     * - Web: Uses the SpeechSynthesisVoice.default property indicating whether the voice is the default voice for the current app language. [Reference](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisVoice)
+     */
+    isDefault: boolean;
 };
 export type WebVoice = Voice & {
-    isDefault: boolean;
     localService: boolean;
     name: string;
     voiceURI: string;

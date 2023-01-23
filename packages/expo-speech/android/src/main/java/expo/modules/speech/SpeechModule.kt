@@ -40,8 +40,10 @@ class SpeechModule(
   @ExpoMethod
   fun getVoices(promise: Promise) {
     var nativeVoices: List<Voice> = emptyList()
+    var defaultVoice: Voice? = null
     try {
       nativeVoices = textToSpeech.voices.toList()
+      defaultVoice = textToSpeech.getDefaultVoice()
     } catch (e: Exception) {}
 
     val voices = nativeVoices.map {
@@ -56,6 +58,7 @@ class SpeechModule(
         putString("name", it.name)
         putString("quality", quality)
         putString("language", LanguageUtils.getISOCode(it.locale))
+        putBoolean("isDefault", it.name == defaultVoice?.name)
       }
     }
 
